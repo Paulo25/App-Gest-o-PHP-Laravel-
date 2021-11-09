@@ -41,7 +41,20 @@ Route::get('/', 'App\Http\Controllers\PrincipalController@principal');
 Route::get('/sobre-nos', 'App\Http\Controllers\SobreNosController@sobreNos');
 Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato']);
 
+// Route::get('/contato/{nome}/{sexo?}/{idade?}', function(string $nome, string $sexo = 'indefinido', int $idade = 0){
+//           echo "Estamos aqui: {$nome} - {$sexo} - {$idade}";
+// });
 
+Route::get('
+          /contato/{nome}/{categoria_id}', 
+          function(
+                    string $nome = 'Desconhecido', 
+                    int $categoria_id = 1 // 1 = informação
+                    ){
+          echo "Estamos aqui: {$nome} - {$categoria_id}";
+          }
+)->where('nome', '[A-Za-z]+')
+->where('categoria_id', '[0-9]+');
 
 
 
