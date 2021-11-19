@@ -141,6 +141,7 @@ Status: {{$fornecedores2[$i]['status']}}
 
 @isset($fornecedoresx)
   @forelse($fornecedoresx as $key => $fornecedorx)
+  <br/>
       Fornecedor: {{$fornecedorx['nome']}}
       <br/>
       Status: {{$fornecedorx['status']}}
@@ -148,4 +149,28 @@ Status: {{$fornecedores2[$i]['status']}}
        @empty
       Não existe fornecedores cadastrados!
   @endforelse
+@endisset
+
+{{-- ---------------------------------------------------------------------------------------------------------- --}}
+{{-- foreach no blade - é analogo do foreach nativo do php --}}
+<br/><br/>
+
+@isset($fornecedores2)
+  @foreach($fornecedores2 as $key => $fornecedor2)
+@{{Iteração atual do laço:}} {{$loop->iteration}}
+<br/>
+Total de registro {{$loop->count}}
+  <br/>
+      Fornecedor: {{$fornecedor2['nome']}}
+      <br/>
+      Status: {{$fornecedor2['status']}}
+      <br/>
+      @if($loop->first)
+        Primeira iteração do Loop
+      @endif
+       @if($loop->last)
+        Ultima iteração do Loop
+      @endif
+      <hr/>
+  @endforeach
 @endisset
