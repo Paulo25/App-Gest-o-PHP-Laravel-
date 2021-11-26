@@ -67,7 +67,7 @@ options
 //Route::redirect('/rota2', '/rota1'); //redirecionamento de routas -> ao acessar a rota2 automaticamente será redirecionado para rota1
 
 /* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
-Route::fallback(function(){
+Route::fallback(function(){ 
           echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para página inicial';
 });
 
@@ -76,6 +76,7 @@ Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('teste')
 Route::get('/', 'App\Http\Controllers\PrincipalController@principal')->name('site.index');
 Route::get('/sobre-nos', 'App\Http\Controllers\SobreNosController@sobreNos')->name('site.sobrenos');
 Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
 Route::get('/login', function(){return 'Login';})->name('site.login');
 
 
