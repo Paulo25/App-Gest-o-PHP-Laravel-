@@ -187,3 +187,7 @@ html, body {
       .redes-sociais img {
           margin: 0px 15px 0px 15px;
       }
+
+      .cor-msg-erro{
+          color:#ff0000; 
+      }

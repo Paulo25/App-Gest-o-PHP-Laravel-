@@ -4,17 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SiteContato;
+use App\Models\MotivoContato;
 
 class ContatoController extends Controller
 {
 
     public function contato(){
 
-        $motivo_contatos = [
-            '1' => 'Dúvida',
-            '2' => 'Elogio',
-            '3' => 'Reclamação'
-        ];
+        $motivo_contatos = MotivoContato::all();
 
         return view('site.contato', ['titulo' => 'Contato', 'motivo_contatos' => $motivo_contatos]);
     }
@@ -41,16 +38,31 @@ class ContatoController extends Controller
         // $contato->fill($request->all());
         // $contato->save();
 
-        $request->validate([
-            'nome' => 'required|min:3|max:40', //nomes com no minimo 3 e no max 40 caracteres
+        $regras = [
+            'nome' => 'required|min:3|max:40|unique:site_contatos', //nomes com no minimo 3, no max 40 caracteres e campo unico
             'telefone' => 'required',
-            'email' => 'required',
-            'motivo_contato' => 'required',
+            'email' => 'email|unique:site_contatos',
+            'motivo_contatos_id' => 'required',
             'mensagem' => 'required|max:2000'
-        ]);
+        ];
+
+        $feedback =  [
+            'nome.min' => 'O campo nome precisa ter no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome precisa ter no máximo 40 caracteres',
+            'mensagem.max' => 'O campo mensagem precisa ter no máximo 2000 caracteres',
+            'motivo_contatos_id.required' => 'O campo motivo contato é de preenchimento obrigatório',
+            
+            'unique' => 'O :attribute informado já está em uso',
+            'required' => 'O campo :attribute é de preenchimento obrigatório',
+            'email' => 'O email informado não é válido',
+        ];
+
+        $request->validate($regras, $feedback);
 
         SiteContato::create($request->all());
 
-        return view('site.contato', ['titulo' => 'Contato']);
+        return redirect()->route('site.index');
+
+       // return view('site.contato', ['titulo' => 'Contato']);
     }
 }
