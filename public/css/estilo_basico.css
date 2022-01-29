@@ -191,3 +191,8 @@ html, body {
       .cor-msg-erro{
           color:#ff0000; 
       }
+
+      label {
+        color: rgb(3, 2, 2);
+        text-align: right !important;
+      }
