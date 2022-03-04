@@ -200,6 +200,11 @@ html, body {
           color:#ff5e00; 
       }
 
+      .cor-msg-success{
+          color: #008000;
+          font-weight: bold;
+      }
+
       label {
         color: rgb(3, 2, 2);
         text-align: right !important;
