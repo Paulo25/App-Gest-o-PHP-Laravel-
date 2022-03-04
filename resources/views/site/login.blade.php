@@ -25,7 +25,7 @@
                     </div>
                     <button type="submit" class="borda-preta">Acessar</button>
                 </form>
-                {{isset($erro) && !empty($erro) ? $erro : ''}}
+                <span class="cor-msg-erro">{{isset($erro) && !empty($erro) ? $erro : ''}}</span>
              </div>
             </div>  
         </div>

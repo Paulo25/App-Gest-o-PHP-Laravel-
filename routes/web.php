@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\TesteController;
 use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Middleware\LogAcessoMiddleware;
+use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,28 +71,29 @@ options
 //Route::redirect('/rota2', '/rota1'); //redirecionamento de routas -> ao acessar a rota2 automaticamente será redirecionado para rota1
 
 /* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
-Route::fallback(function(){ 
-          echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para página inicial';
-});
 
 Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('teste');
 
 Route::get('/', 'App\Http\Controllers\PrincipalController@principal')->name('site.index')->middleware('log.acesso');//->middleware(LogAcessoMiddleware::class);
 Route::get('/sobre-nos', 'App\Http\Controllers\SobreNosController@sobreNos')->name('site.sobrenos');
-Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
-Route::post('/contato', [\App\Http\Controllers\ContatoController::class, 'salvar'])->name('site.contato');
+Route::get('/contato', '\App\Http\Controllers\ContatoController@contato')->name('site.contato');
+Route::post('/contato', '\App\Http\Controllers\ContatoController@salvar')->name('site.contato');
 
 Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
 Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login');
 
-
-Route::middleware('log.acesso','autenticacao:padrao,visitante')->prefix('/app')->group(function(){
-          Route::get('/clientes', function(){return 'Clientes';})->name('app.clientes');
-          Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
-          Route::get('/produtos', function(){return 'Produtos';})->name('app.produtos');
+Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
+->prefix('/app')->group(function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('app.home');
+    Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
+    Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
+    Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
+    Route::get('/produto', [ProdutoController::class, 'index'])->name('app.produto');
 });
 
-
+Route::fallback(function(){ 
+    echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para página inicial';
+});
 
 
 
