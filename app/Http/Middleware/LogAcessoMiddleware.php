@@ -22,7 +22,7 @@ class LogAcessoMiddleware
         
         $ip = $request->server->get('REMOTE_ADDR'); //recupera o ip do servidor de dominio que fez a requisição
         $rota = $request->getRequestUri(); //recupera a rota em que a requisição está acessando
-        LogAcesso::create(['log' => "Ip $ip requisitou a rota $rota"]);
+        //LogAcesso::create(['log' => "Ip $ip requisitou a rota $rota"]);
         
         //return $next($request); //next da continuidade com a requisição
         
