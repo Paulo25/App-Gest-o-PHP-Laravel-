@@ -235,4 +235,6 @@ html, body {
     .flex, .items-center, .justify-between{
         margin-top: 20px;
         font-size: 19px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
