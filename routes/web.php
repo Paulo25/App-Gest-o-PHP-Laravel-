@@ -6,7 +6,6 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutoController;
-use App\Models\Fornecedor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +70,6 @@ options
 // })->name('site.rota2');
 //Route::redirect('/rota2', '/rota1'); //redirecionamento de routas -> ao acessar a rota2 automaticamente será redirecionado para rota1
 
-/* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
 
 Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('teste');
 
@@ -90,15 +88,20 @@ Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
     Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
     Route::get('/produto', [ProdutoController::class, 'index'])->name('app.produto');
 
-    Route::get('/fornecedor', [FornecedorController::class, 'index'])->name('app.fornecedor');
-    Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
-    Route::get('/fornecedor/listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
-    Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
-    Route::post('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
-    Route::get('/fornecedor/editar/{id}/{msg?}', [FornecedorController::class, 'editar'])->name('app.fornecedor.editar');
-    Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
+    Route::prefix('/fonecedor')->group(function(){
+        Route::get('/', [FornecedorController::class, 'index'])->name('app.fornecedor');
+        Route::post('listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+        Route::get('listar', [FornecedorController::class, 'listar'])->name('app.fornecedor.listar');
+        Route::get('adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+        Route::post('adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedor.adicionar');
+        Route::get('editar/{id}/{msg?}', [FornecedorController::class, 'editar'])->name('app.fornecedor.editar');
+        Route::get('excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
+    });
+
+    Route::resource('produto', ProdutoController::class);
 });
 
+/* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
 Route::fallback(function(){ 
     echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para página inicial';
 });
