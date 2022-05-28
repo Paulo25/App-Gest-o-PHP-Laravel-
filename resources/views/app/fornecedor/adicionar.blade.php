@@ -25,16 +25,16 @@
                 @csrf
                 <input type="hidden" name="id" value="{{$fornecedor->id ?? ''}}"/>
 
-                <input type="text" name="nome" placeholder="Nome" value="{{$fornecedor->nome ?? old('nome')}}" class="bolda-preta"/>
+                <input type="text" name="nome" placeholder="Nome" value="{{$fornecedor->nome ?? old('nome')}}" class="borda-preta"/>
                 <span class="cor-msg-erro">{{$errors->has('nome') ? $errors->first('nome') : ''}}</span>
 
-                <input type="text" name="site" placeholder="Site" value="{{$fornecedor->site ?? old('site')}}" class="bolda-preta"/>
+                <input type="text" name="site" placeholder="Site" value="{{$fornecedor->site ?? old('site')}}" class="borda-preta"/>
                 <span class="cor-msg-erro">{{$errors->has('site') ? $errors->first('site') : ''}}</span>
 
-                <input type="text" name="uf" placeholder="UF" value="{{$fornecedor->uf ?? old('uf')}}" class="bolda-preta"/>
+                <input type="text" name="uf" placeholder="UF" value="{{$fornecedor->uf ?? old('uf')}}" class="borda-preta"/>
                 <span class="cor-msg-erro">{{$errors->has('uf') ? $errors->first('uf') : ''}}</span>
 
-                <input type="text" name="email" placeholder="E-mail" value="{{$fornecedor->email ?? old('email')}}" class="bolda-preta"/>
+                <input type="text" name="email" placeholder="E-mail" value="{{$fornecedor->email ?? old('email')}}" class="borda-preta"/>
                 <span class="cor-msg-erro">{{$errors->has('email') ? $errors->first('email') : ''}}</span>
 
                 <button type="submit" class="borda-preta">Cadastrar</button>
