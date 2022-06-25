@@ -14,14 +14,14 @@ class SiteContatoSeeder extends Seeder
      */
     public function run()
     {
-        /*
+        
         $siteContato = new SiteContato();
         $siteContato->nome = 'Sistema SG';
         $siteContato->telefone = '(71) 99999-88888';
         $siteContato->email = 'contato@sg.com.br';
-        $siteContato->motivo_contato = 1;
+        $siteContato->motivo_contatos_id = 1;
         $siteContato->mensagem = 'Seja bem vindo ao sistema Super Gestão!';
         $siteContato->save();
-        */
+        
     }
 }
