@@ -21,7 +21,7 @@ class ProdutoController extends Controller
         ->join('unidades', 'unidades.id', 'produtos.unidade_id')
         ->paginate(10);
 
-        return view('app.produto.index', compact('produtos', 'request'));
+        return response()->view('app.produto.index', compact('produtos', 'request'));
     }
 
     /**
@@ -32,8 +32,8 @@ class ProdutoController extends Controller
     public function create()
     {
         $unidades = Unidade::all();
-
-        return view('app.produto.create', compact('unidades'));
+       
+        return response()->view('app.produto.create', compact('unidades'));
     }
 
     /**
@@ -55,15 +55,15 @@ class ProdutoController extends Controller
             'required' => 'O campo :attribute deve ser preenchido',
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
             'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
-            'nome.min' => 'O campo descrição deve ter no mínimo 3 caracteres',
-            'nome.max' => 'O campo descrição deve ter no máximo 2000 caracteres',
+            'descricao.min' => 'O campo descrição deve ter no mínimo 3 caracteres',
+            'descricao.max' => 'O campo descrição deve ter no máximo 2000 caracteres',
             'peso.integer' => 'O campo peso deve ser um número inteiro',
             'unidade_id.exists' => 'A undiade de medida informada não existe',
         ];
 
         $request->validate($regras, $feedback);
-        
         Produto::create($request->all());
+
         return redirect()->route('produto.index');
     }
 
@@ -75,7 +75,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        return view('app.produto.show', compact('produto'));
+        return response()->view('app.produto.show', compact('produto'));
     }
 
     /**
@@ -86,7 +86,8 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
-        //
+        $unidades = Unidade::all();
+        return response()->view('app.produto.edit', compact('produto', 'unidades'));
     }
 
     /**
@@ -98,7 +99,8 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        //
+        $produto->update($request->all()); //atualizando a instância do objeto com os dados recuperados na requisição http
+        return redirect()->route('produto.edit', ['produto' => $produto->id]);
     }
 
     /**
@@ -109,6 +111,7 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        $produto->delete();
+        return redirect()->route('produto.index');
     }
 }
