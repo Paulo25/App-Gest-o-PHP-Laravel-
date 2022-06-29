@@ -6,6 +6,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoDetalheController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,7 +99,10 @@ Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
         Route::get('excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedor.excluir');
     });
 
+    #produtos
     Route::resource('produto', ProdutoController::class);
+    #produtos detalhes
+    Route::resource('produto-detalhe', ProdutoDetalheController::class);
 });
 
 /* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
