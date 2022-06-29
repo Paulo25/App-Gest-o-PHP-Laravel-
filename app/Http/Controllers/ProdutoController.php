@@ -100,7 +100,7 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         $produto->update($request->all()); //atualizando a instância do objeto com os dados recuperados na requisição http
-        return redirect()->route('produto.edit', ['produto' => $produto->id]);
+        return redirect()->route('produto.show', ['produto' => $produto->id]);
     }
 
     /**
