@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Produto;
 use App\Models\ProdutoDetalhe;
 use App\Models\Unidade;
@@ -18,9 +19,13 @@ class ProdutoController extends Controller
     {
         $request = $request->all();
 
-        $produtos = Produto::select('produtos.*', 'unidades.descricao as un_descricao')
-        ->join('unidades', 'unidades.id', 'produtos.unidade_id')
+        $produtos = Item::select('produtos.*', 'unidades.descricao as un_descricao')
+        ->join('unidades', 'unidades.id', 'produtos.unidade_id')->with(['itemDetalhe'])
         ->paginate(10);
+
+        // $produtos = Produto::select('produtos.*', 'unidades.descricao as un_descricao')
+        // ->join('unidades', 'unidades.id', 'produtos.unidade_id')
+        // ->paginate(10);
 
         /*foreach($produtos as $key => $produto){
             //print_r($produto->getAttributes());
