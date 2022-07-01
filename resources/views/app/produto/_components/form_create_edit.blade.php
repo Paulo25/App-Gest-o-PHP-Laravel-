@@ -2,10 +2,21 @@
        <form method="post" action="{{ route('produto.update', ['produto' => $produto->id]) }}">
            @csrf
            @method('PUT')
-    @else
-        <form method="post" action="{{ route('produto.store') }}">
-            @csrf
+       @else
+           <form method="post" action="{{ route('produto.store') }}">
+               @csrf
    @endif
+
+   <select name="fornecedor_id">
+       <option value="0">-- Selecione fornecedor --</option>
+       @foreach ($fornecedores as $fornecedor)
+           <option value="{{ $fornecedor->id }}"
+               {{ ($produto->fornecedor->id ?? old('fornecedor_id')) == $fornecedor->id ? 'selected' : '' }}>
+               {{ $fornecedor->nome }}</option>
+       @endforeach
+   </select>
+   <span class="cor-msg-erro">{{$errors->has('fornecedor_id') ? $errors->first('fornecedor_id') : ''}}</span>
+
    <input type="text" name="nome" placeholder="Nome" value="{{ $produto->nome ?? old('nome') }}"
        class="borda-preta" />
    <span class="cor-msg-erro"> {{ $errors->has('nome') ? $errors->first('nome') : '' }} </span>
@@ -28,5 +39,5 @@
    </select>
    <span class="cor-msg-erro"> {{ $errors->has('unidade_id') ? $errors->first('unidade_id') : '' }} </span>
 
-   <button type="submit" class="borda-preta">{{isset($produto) ? 'Editar' : 'Cadastrar'}}</button>
+   <button type="submit" class="borda-preta">{{ isset($produto) ? 'Editar' : 'Cadastrar' }}</button>
    </form>
