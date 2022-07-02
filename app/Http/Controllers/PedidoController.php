@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class ClienteController extends Controller
     public function index(Request $request)
     {
         $request = $request->all();
-        $clientes = Cliente::paginate(10);
-        return response()->view('app.cliente.index', compact('clientes', 'request'));
+        $pedidos = Pedido::with('cliente')->paginate(10);
+
+        return Response()->view('app.pedido.index', compact('pedidos', 'request'));
     }
 
     /**
@@ -26,7 +28,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return response()->view('app.cliente.create');
+        $clientes =  Cliente::all();
+        return Response()->view('app.pedido.create', compact('clientes'));
     }
 
     /**
@@ -38,22 +41,20 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:50'
+            'cliente_id' => 'exists:clientes,id'
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute é obrigatório',
-            'min' => 'O campo :attribute deve ter no minimo 3 caracteres',
-            'max' => 'O campo :attribute deve ter no máximo 50 caracteres'
+            'cliente_id.exists' => 'O cliente informado não existe' 
         ];
 
         $request->validate($regras, $feedback);
 
-        $cliente = new Cliente();
-        $cliente->nome = $request->get('nome');
-        $cliente->save();
-
-        return redirect()->route('cliente.index');
+        $pedido = new Pedido();
+        $pedido->cliente_id = $request->get('cliente_id');
+        $pedido->save();
+        
+        return redirect()->route('pedido.index');
     }
 
     /**

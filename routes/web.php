@@ -5,6 +5,8 @@ use App\Http\Controllers\TesteController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PedidoProdutoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProdutoDetalheController;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +88,6 @@ Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
 ->prefix('/app')->group(function(){
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
-    Route::get('/cliente', [ClienteController::class, 'index'])->name('app.cliente');
     Route::get('/produto', [ProdutoController::class, 'index'])->name('app.produto');
 
     Route::prefix('/fonecedor')->group(function(){
@@ -103,6 +104,10 @@ Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
     Route::resource('produto', ProdutoController::class);
     #produtos detalhes
     Route::resource('produto-detalhe', ProdutoDetalheController::class);
+
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('pedido', PedidoController::class);
+    Route::resource('pedido-produto', PedidoProdutoController::class);
 });
 
 /* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/

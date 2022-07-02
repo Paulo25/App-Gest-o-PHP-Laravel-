@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cliente;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class PedidoProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $request = $request->all();
-        $clientes = Cliente::paginate(10);
-        return response()->view('app.cliente.index', compact('clientes', 'request'));
+        //
     }
 
     /**
@@ -26,7 +23,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return response()->view('app.cliente.create');
+        //
     }
 
     /**
@@ -37,23 +34,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $regras = [
-            'nome' => 'required|min:3|max:50'
-        ];
-
-        $feedback = [
-            'required' => 'O campo :attribute é obrigatório',
-            'min' => 'O campo :attribute deve ter no minimo 3 caracteres',
-            'max' => 'O campo :attribute deve ter no máximo 50 caracteres'
-        ];
-
-        $request->validate($regras, $feedback);
-
-        $cliente = new Cliente();
-        $cliente->nome = $request->get('nome');
-        $cliente->save();
-
-        return redirect()->route('cliente.index');
+        //
     }
 
     /**
