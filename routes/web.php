@@ -107,7 +107,11 @@ Route::middleware('log.acesso','autenticacao:padrao,visitante,p3,p4')
 
     Route::resource('cliente', ClienteController::class);
     Route::resource('pedido', PedidoController::class);
-    Route::resource('pedido-produto', PedidoProdutoController::class);
+    // Route::resource('pedido-produto', PedidoProdutoController::class);
+    Route::get('pedido-produto/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+    Route::post('pedido-produto/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
+    // Route::delete('pedido-produto/{pedido}/{produto}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
+    Route::delete('pedido-produto/{pedido_produto}/{pedido_id}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
 });
 
 /* Rota de contigência: caso usuário acessa uma determinada rota inexistente, ele cairá nessa rota de fallback*/
